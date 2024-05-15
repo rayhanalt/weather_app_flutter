@@ -1,4 +1,4 @@
-# slice_flutter
+# Slice Flutter
 
 A new Flutter project.
 
