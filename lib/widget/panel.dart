@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:slice_flutter/custom/text.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
