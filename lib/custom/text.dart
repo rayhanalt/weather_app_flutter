@@ -14,7 +14,7 @@ class TextCustom extends StatelessWidget {
     this.text = 'Text',
     this.fontWeight = FontWeight.normal,
     this.fontSize = 34,
-    this.height = 41,
+    this.height = 0,
     this.wordSpacing = 0.37,
     this.fontFamily = 'SFProDisplay',
   });

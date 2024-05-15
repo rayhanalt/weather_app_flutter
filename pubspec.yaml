@@ -34,6 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -76,7 +77,17 @@ flutter:
     - family: SFProDisplay
       fonts:
         - asset: assets/font/SF-Pro-Display-Bold.ttf
+          weight: 900
+        - asset: assets/font/SF-Pro-Display-Semibold.ttf
+          weight: 800
         - asset: assets/font/SF-Pro-Display-Regular.ttf
+          weight: 500
+        - asset: assets/font/SF-Pro-Display-Medium.ttf
+          weight: 400
+        - asset: assets/font/SF-Pro-Display-Thin.ttf
+          weight: 200
+        - asset: assets/font/SF-Pro-Display-Ultralight.ttf
+          weight: 100
           # style: italic
   #   - family: Trajan Pro
   #     fonts:
