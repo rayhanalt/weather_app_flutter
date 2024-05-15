@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Slice Link
 
-[figmaLink](<https://www.figma.com/design/xIwW6SxXZLh1Qm8LbOrqw2/Weather-App-UI-Design-(Community)?node-id=2-351&t=P0m6yAhAjpiA88Bs-0>)
+[Figma Open Source Link](<https://www.figma.com/design/xIwW6SxXZLh1Qm8LbOrqw2/Weather-App-UI-Design-(Community)?node-id=2-351&t=P0m6yAhAjpiA88Bs-0>)
 
 ## Getting Started
 
