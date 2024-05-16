@@ -1,8 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:slice_flutter/assets/colors.dart';
 import 'package:slice_flutter/custom/indicator.dart';
 import 'package:slice_flutter/custom/text.dart';
