@@ -71,7 +71,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: TextCustom(
-                      text: "Hourly Forecast",
+                      text: "Weekly Forecast",
                       fontWeight: FontWeight.w800,
                       fontSize: 15.0,
                       color: ColorAssets.secondary.withOpacity(0.5),
@@ -97,22 +97,28 @@ class _PanelWidgetState extends State<PanelWidget> {
                   children: [
                     PrimaryScrollController(
                       controller: widget.controller,
-                      child: ListView(
-                        controller: hourlyScrollController,
-                        children: const [
-                          TextCustom(text: "Hour "),
-                          TextCustom(text: "Details"),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: ListView(
+                          controller: hourlyScrollController,
+                          children: const [
+                            TextCustom(text: "Hour "),
+                            TextCustom(text: "Details"),
+                          ],
+                        ),
                       ),
                     ),
                     PrimaryScrollController(
                       controller: widget.controller,
-                      child: ListView(
-                        controller: weeklyScrollController,
-                        children: const [
-                          TextCustom(text: "Week "),
-                          TextCustom(text: "Details"),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: ListView(
+                          controller: weeklyScrollController,
+                          children: const [
+                            TextCustom(text: "Week "),
+                            TextCustom(text: "Details"),
+                          ],
+                        ),
                       ),
                     ),
                   ],

@@ -1,5 +1,7 @@
 class IconAssets {
-  static const pic = 'assets/icon/';
-  static const pic1 = 'assets/icon/';
-  static const pic2 = 'assets/icon/';
+  static const map = 'assets/icon/Map.png';
+  static const menu = 'assets/icon/Menu.png';
+  static const hover = 'assets/icon/Hover.png';
+  static const plus = 'assets/icon/Plus.png';
+  static const list = 'assets/icon/List.png';
 }
