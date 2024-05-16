@@ -12,12 +12,26 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final PanelController panelController = PanelController();
+
+  late TabController tabController;
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final panelHeightOpen = MediaQuery.of(context).size.height * 0.8;
-    final panelHeightClosed = MediaQuery.of(context).size.height * 0.3;
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.35;
     return Scaffold(
       body: SlidingUpPanel(
         controller: panelController,
@@ -27,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backdropOpacity: 0.7,
         parallaxEnabled: true,
         parallaxOffset: 0.1,
-        color: ColorAssets.solid1.withOpacity(0.7),
+        color: ColorAssets.solid1.withOpacity(0),
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
           topLeft: Radius.circular(20),
@@ -41,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   constraints: const BoxConstraints(maxWidth: 150),
@@ -95,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
         panelBuilder: (sc) => PanelWidget(
           controller: sc,
           panelController: panelController,
+          tabController: tabController,
         ),
       ),
     );
