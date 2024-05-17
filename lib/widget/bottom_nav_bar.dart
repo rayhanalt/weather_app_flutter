@@ -8,8 +8,8 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final heightButton = MediaQuery.of(context).size.height * 0.07;
-    final widthButton = MediaQuery.of(context).size.width * 0.35;
+    final heightButton = MediaQuery.of(context).size.height * 0.075;
+    final widthButton = MediaQuery.of(context).size.width * 0.4;
     return Container(
       decoration: const BoxDecoration(
         color: Colors.transparent,
@@ -38,6 +38,12 @@ class BottomNavBar extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          CustomPaint(
+            painter: TopLinePainter(),
+            child: Container(
+              height: 88,
             ),
           ),
           Positioned(
@@ -114,23 +120,23 @@ class UShapeClipper extends CustomClipper<Path> {
   }
 }
 
-class SinglePeakMountainClipper extends CustomClipper<Path> {
+class TopLinePainter extends CustomPainter {
   @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height * 0.6);
-    var controlPoint = Offset(size.width / 2, size.height);
-    var endPoint = Offset(size.width, size.height * 0.6);
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = ColorAssets.light.withOpacity(0.26)
+      ..strokeWidth = 0.5
+      ..style = PaintingStyle.stroke;
 
-    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
-    path.lineTo(size.width, 0);
-    path.close();
+    Path path = Path()
+      ..moveTo(0, size.height * 0.2)
+      ..quadraticBezierTo(size.width / 2, size.height, size.width, size.height * 0.2);
 
-    return path;
+    canvas.drawPath(path, paint);
   }
 
   @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+  bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
   }
 }

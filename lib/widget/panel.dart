@@ -98,10 +98,42 @@ class _PanelWidgetState extends State<PanelWidget> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
                           controller: hourlyScrollController,
                           children: const [
-                            TextCustom(text: "Hour "),
-                            TextCustom(text: "Details"),
+                            // Container(
+                            //   decoration: const BoxDecoration(color: Colors.amber),
+                            //   child: const Column(
+                            //     children: [
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            // Container(
+                            //   decoration: const BoxDecoration(color: Colors.amber),
+                            //   child: const Column(
+                            //     children: [
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //       TextCustom(
+                            //         text: "w",
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
