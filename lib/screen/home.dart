@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ],
             ),
             panelBuilder: (sc) => PanelWidget(
-              controller: sc,
+              scrollController: sc,
               panelController: panelController,
               tabController: tabController,
             ),
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           setState(() {
             ontapButton = true;
           });
-          print('Tapped');
+          // print('Tapped');
           await Future.delayed(const Duration(milliseconds: 100));
           setState(() {
             ontapButton = false;

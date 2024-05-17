@@ -1,18 +1,23 @@
+import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:slice_flutter/assets/colors.dart';
+import 'package:slice_flutter/assets/icon.dart';
 import 'package:slice_flutter/custom/indicator.dart';
 import 'package:slice_flutter/custom/text.dart';
+import 'package:slice_flutter/widget/panel/forecast.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatefulWidget {
-  final ScrollController controller;
+  final ScrollController scrollController;
   final PanelController panelController;
   final TabController tabController;
   const PanelWidget({
     super.key,
-    required this.controller,
+    required this.scrollController,
     required this.panelController,
     required this.tabController,
   });
@@ -24,6 +29,22 @@ class PanelWidget extends StatefulWidget {
 class _PanelWidgetState extends State<PanelWidget> {
   final ScrollController hourlyScrollController = ScrollController();
   final ScrollController weeklyScrollController = ScrollController();
+
+  final List<String> sampleTexts = [
+    IconAssets.moonCloudFastWind,
+    IconAssets.moonCloudMidRain,
+    IconAssets.sunCloudAngledRain,
+    IconAssets.sunCloudMidRain,
+    IconAssets.tornado,
+  ];
+
+  late List<int> randomIndexes; // Deklarasi late untuk menunda inisialisasi
+
+  @override
+  void initState() {
+    super.initState();
+    randomIndexes = List.generate(10, (index) => Random().nextInt(sampleTexts.length));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,69 +110,60 @@ class _PanelWidgetState extends State<PanelWidget> {
                 // unselectedLabelStyle: const TextStyle(fontSize: 16.0),
               ),
               Expanded(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: widget.tabController,
-                  children: [
-                    PrimaryScrollController(
-                      controller: widget.controller,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: ListView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          controller: hourlyScrollController,
-                          children: const [
-                            // Container(
-                            //   decoration: const BoxDecoration(color: Colors.amber),
-                            //   child: const Column(
-                            //     children: [
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // Container(
-                            //   decoration: const BoxDecoration(color: Colors.amber),
-                            //   child: const Column(
-                            //     children: [
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //       TextCustom(
-                            //         text: "w",
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    PrimaryScrollController(
-                      controller: widget.controller,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: ListView(
-                          controller: weeklyScrollController,
-                          children: const [
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 67),
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: widget.tabController,
+                    children: [
+                      ListView(
+                          scrollDirection: Axis.vertical,
+                          controller: widget.scrollController,
+                          shrinkWrap: true,
+                          children: [
+                            Container(
+                              height: 100,
+                              constraints:
+                                  const BoxConstraints(maxWidth: double.infinity, minHeight: 170),
+                              child: ListView.builder(
+                                addAutomaticKeepAlives: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, i) {
+                                  // Menggunakan const di sini untuk mengoptimalkan performa
+                                  // jika widget tidak membutuhkan rebuild setiap saat
+                                  int randomIndex = randomIndexes[i];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.5,
+                                    ),
+                                    child: ForeCastWidget(
+                                      text1: i != 3 ? '1$i AM' : 'Now',
+                                      text2: '3$i%',
+                                      text3: '2$i°',
+                                      assetIcon: sampleTexts[randomIndex],
+                                      color1:
+                                          i == 3 ? ColorAssets.linearTwo1 : ColorAssets.linearOne1,
+                                      color2:
+                                          i == 3 ? ColorAssets.linearTwo2 : ColorAssets.linearOne2,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ]),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          // controller: weeklyScrollController,
+                          children: [
                             TextCustom(text: "Week "),
                             TextCustom(text: "Details"),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -164,6 +176,8 @@ class _PanelWidgetState extends State<PanelWidget> {
   @override
   void dispose() {
     // Dispose controllers when not needed anymore
+    // Dispose controllers when not needed anymore
+
     hourlyScrollController.dispose();
     weeklyScrollController.dispose();
     super.dispose();

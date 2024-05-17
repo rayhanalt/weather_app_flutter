@@ -5,6 +5,7 @@ import 'package:slice_flutter/routes/routes.dart';
 import 'package:slice_flutter/screen/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
