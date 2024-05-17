@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slice_flutter/assets/colors.dart';
+import 'package:slice_flutter/assets/icon.dart';
 import 'package:slice_flutter/assets/images.dart';
 import 'package:slice_flutter/custom/text.dart';
 import 'package:slice_flutter/widget/bottom_nav_bar.dart';
@@ -15,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final PanelController panelController = PanelController();
+
+  bool ontapButton = false;
 
   late TabController tabController;
   @override
@@ -121,7 +124,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             right: 0,
             child: BottomNavBar(),
           ),
+          // const Positioned(
+          //   top: 0,
+          //   right: 0,
+          //   left: 0,
+          //   bottom: 0,
+          //   child: Image(
+          //     // height: ,
+          //     image: AssetImage(IconAssets.button),
+          //     // fit: BoxFit.fill,
+          //   ),
+          // )
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: GestureDetector(
+        onTap: () async {
+          setState(() {
+            ontapButton = true;
+          });
+          print('Tapped');
+          await Future.delayed(const Duration(milliseconds: 100));
+          setState(() {
+            ontapButton = false;
+          });
+        },
+        child: Image(
+          height: panelHeightClosed / 5.1,
+          image: AssetImage(ontapButton ? IconAssets.buttonPressed : IconAssets.button),
+          // fit: BoxFit.fill,
+        ),
       ),
     );
   }

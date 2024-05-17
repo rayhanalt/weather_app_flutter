@@ -4,4 +4,6 @@ class IconAssets {
   static const hover = 'assets/icon/Hover.png';
   static const plus = 'assets/icon/Plus.png';
   static const list = 'assets/icon/List.png';
+  static const button = 'assets/icon/buttonDefault.png';
+  static const buttonPressed = 'assets/icon/buttonPressed.png';
 }

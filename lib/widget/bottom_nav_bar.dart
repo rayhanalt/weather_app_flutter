@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slice_flutter/assets/colors.dart';
 import 'package:slice_flutter/assets/icon.dart';
+import 'package:slice_flutter/assets/images.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -10,7 +11,9 @@ class BottomNavBar extends StatelessWidget {
     final heightButton = MediaQuery.of(context).size.height * 0.07;
     final widthButton = MediaQuery.of(context).size.width * 0.35;
     return Container(
-      color: Colors.transparent,
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+      ),
       child: Stack(
         children: [
           ClipPath(
@@ -53,26 +56,28 @@ class BottomNavBar extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(-20),
-                      // color: Colors.amber,
-                    ),
+                    decoration: const BoxDecoration(
+                        // borderRadius: BorderRadius.circular(-20),
+                        // color: Colors.amber,
+                        ),
                     width: widthButton,
                     height: heightButton,
-                    child: ClipPath(
-                      clipper: SinglePeakMountainClipper(),
-                      child: Container(
-                        // height: , // Sesuaikan dengan kebutuhan
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 5),
-                            ),
+                    child: ShaderMask(
+                      shaderCallback: (Rect bounds) {
+                        return LinearGradient(
+                          colors: [
+                            ColorAssets.linearOne1.withOpacity(0.5),
+                            ColorAssets.linearOne2.withOpacity(0.5),
                           ],
-                        ),
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ).createShader(bounds);
+                      },
+                      blendMode: BlendMode.srcATop,
+                      child: const Image(
+                        // height: 44,
+                        image: AssetImage(ImagesAssets.subtract),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -112,20 +117,20 @@ class UShapeClipper extends CustomClipper<Path> {
 class SinglePeakMountainClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    Path path = Path();
-    path.moveTo(0, size.height); // Mulai dari kiri bawah
-    path.quadraticBezierTo(
-      size.width * 0.5, size.height * 2, // Titik kontrol di tengah atas
-      size.width, size.height, // Titik akhir di kanan bawah
-    );
-    path.lineTo(size.width, 0); // Garis ke kanan atas
-    path.lineTo(0, 0); // Garis ke kiri atas
-    path.close(); // Tutup path
+    var path = Path();
+    path.lineTo(0, size.height * 0.6);
+    var controlPoint = Offset(size.width / 2, size.height);
+    var endPoint = Offset(size.width, size.height * 0.6);
+
+    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
+    path.lineTo(size.width, 0);
+    path.close();
+
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return false;
   }
 }
