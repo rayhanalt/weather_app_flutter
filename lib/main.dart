@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:slice_flutter/assets/colors.dart';
 import 'package:slice_flutter/page/weather_list.dart';
 import 'package:slice_flutter/routes/routes.dart';
@@ -6,7 +7,10 @@ import 'package:slice_flutter/screen/home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

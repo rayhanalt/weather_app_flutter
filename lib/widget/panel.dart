@@ -27,9 +27,6 @@ class PanelWidget extends StatefulWidget {
 }
 
 class _PanelWidgetState extends State<PanelWidget> {
-  final ScrollController hourlyScrollController = ScrollController();
-  final ScrollController weeklyScrollController = ScrollController();
-
   final List<String> sampleTexts = [
     IconAssets.moonCloudFastWind,
     IconAssets.moonCloudMidRain,
@@ -48,6 +45,7 @@ class _PanelWidgetState extends State<PanelWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final heightScreen = MediaQuery.sizeOf(context).height / 1.41;
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(24.0)),
       child: BackdropFilter(
@@ -59,7 +57,7 @@ class _PanelWidgetState extends State<PanelWidget> {
               const SizedBox(height: 12.0),
               GestureDetector(
                 onTap: () {
-                  widget.panelController.panelPosition.round() == 1
+                  widget.panelController.isPanelOpen
                       ? widget.panelController.close()
                       : widget.panelController.open();
                 },
@@ -74,7 +72,6 @@ class _PanelWidgetState extends State<PanelWidget> {
               ),
               const SizedBox(height: 18.0),
               TabBar(
-                tabAlignment: TabAlignment.fill,
                 isScrollable: false,
                 controller: widget.tabController,
                 tabs: [
@@ -97,34 +94,29 @@ class _PanelWidgetState extends State<PanelWidget> {
                     ),
                   ),
                 ],
-                // indicatorColor: Colors.white,
-                // tabAlignment: TabAlignment.fill,
-                // labelColor: Colors.white,
-                // indicatorWeight: 10,
                 indicator: CustomTabIndicator(),
-                // unselectedLabelColor: Colors.grey,
-                dividerColor: ColorAssets.dark.withOpacity(0.1),
-                dividerHeight: 2,
-                // labelStyle: const TextStyle(
-                //     fontSize: 16.0, fontWeight: FontWeight.w800, fontFamily: 'SFProDisplay'),
-                // unselectedLabelStyle: const TextStyle(fontSize: 16.0),
+                indicatorWeight: 2,
+                indicatorColor: ColorAssets.dark.withOpacity(0.1),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 67),
-                  child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: widget.tabController,
-                    children: [
-                      ListView(
-                          scrollDirection: Axis.vertical,
-                          controller: widget.scrollController,
-                          shrinkWrap: true,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                ),
+                height: 20,
+                constraints: BoxConstraints(minHeight: heightScreen),
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: widget.tabController,
+                  children: [
+                    SizedBox(
+                      height: 2,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              height: 100,
-                              constraints:
-                                  const BoxConstraints(maxWidth: double.infinity, minHeight: 170),
+                            SizedBox(
+                              height: 200,
                               child: ListView.builder(
                                 addAutomaticKeepAlives: true,
                                 scrollDirection: Axis.horizontal,
@@ -150,20 +142,57 @@ class _PanelWidgetState extends State<PanelWidget> {
                                   );
                                 },
                               ),
-                            )
-                          ]),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          // controller: weeklyScrollController,
-                          children: [
-                            TextCustom(text: "Week "),
-                            TextCustom(text: "Details"),
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 2,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: ListView.builder(
+                                addAutomaticKeepAlives: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, i) {
+                                  // Menggunakan const di sini untuk mengoptimalkan performa
+                                  // jika widget tidak membutuhkan rebuild setiap saat
+                                  int randomIndex = randomIndexes[i];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.5,
+                                    ),
+                                    child: ForeCastWidget(
+                                      text1: i != 3 ? '1$i AM' : 'Now',
+                                      text2: '3$i%',
+                                      text3: '2$i°',
+                                      assetIcon: sampleTexts[randomIndex],
+                                      color1:
+                                          i == 3 ? ColorAssets.linearTwo1 : ColorAssets.linearOne1,
+                                      color2:
+                                          i == 3 ? ColorAssets.linearTwo2 : ColorAssets.linearOne2,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -171,15 +200,5 @@ class _PanelWidgetState extends State<PanelWidget> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // Dispose controllers when not needed anymore
-    // Dispose controllers when not needed anymore
-
-    hourlyScrollController.dispose();
-    weeklyScrollController.dispose();
-    super.dispose();
   }
 }
